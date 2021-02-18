@@ -1,0 +1,12 @@
+@import "theme/standard/layout/_form.scss";
+// @import "../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+*, html {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.error {
+    color: red;
+    font-size: 12px
+}
+

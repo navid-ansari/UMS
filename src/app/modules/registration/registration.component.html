@@ -1,0 +1,96 @@
+<div class="container">
+  <form [formGroup]="registrationForm" (ngSubmit)=submitRegister()>
+    <!-- <pre> {{ registrationForm.value | json}}</pre> -->
+    <div class="form-group">
+      <label for="exampleInputEmail1">Name</label>
+      <input type="type" class="form-control" [(ngModel)]="registrationModel.name" formControlName="name" name="name"
+        id="name" aria-describedby="emailHelp">
+      <div *ngIf="submitted && f.name.invalid" class="error">
+        <div *ngIf="f.name.errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Age</label>
+      <input type="number" class="form-control" [(ngModel)]="registrationModel.age" formControlName="age" name="age"
+        id="age" aria-describedby="emailHelp">
+      <div *ngIf="submitted && f.age.invalid" class="error">
+        <div *ngIf="f.age.errors.required">Age is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Gender</label>
+      <select class="form-control" [(ngModel)]="registrationModel.gender" formControlName="gender" name="gender"
+        id="gender" selectReqValidator>
+        <option value="null"></option>
+        <option *ngFor="let gender of genderList" [value]="gender.id">{{ gender.description }}</option>
+      </select>
+      <div *ngIf="submitted && f.gender.errors" class="error">
+        <div *ngIf="f.gender.errors?.requiredError || f.gender.errors?.required">Gender is required</div>
+      </div>
+      <!-- <div *ngIf="submitted && f.gender.errors" class="error">
+        <div *ngIf="f.gender.errors.required">Gender is required</div>
+      </div> -->
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email</label>
+      <input type="email" class="form-control" [(ngModel)]="registrationModel.email" formControlName="email"
+        name="email" id="email" aria-describedby="emailHelp">
+      <div *ngIf="submitted && f.email.errors" class="error">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+      </div>
+    </div>
+    <div class="form-group" formArrayName="address">
+      <label for="exampleInputEmail1">Address
+        <i class="fa fa-plus-square" (click)="addAddress()" aria-hidden="true"></i>&nbsp;&nbsp;
+        <span *ngIf="registrationModel.address?.length >=2" style="color: orange;font-size: 12px;">Maximun two address
+          allowed</span>
+      </label>
+      <div *ngFor="let addr of adressess().controls; let i=index" [formGroupName]="i" style="padding-left: 15px">
+        <div class="pull-right"> <i class="fa fa-minus-square" (click)="removeAddress(i)" aria-hidden="true"></i></div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" class="form-control" [(ngModel)]="registrationModel.address[i].country"
+            formControlName="country" name="country" id="country">
+          <div *ngIf="submitted && adressess().controls[i].get('country').errors?.required" class="error">
+            <div>Country is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" class="form-control" [(ngModel)]="registrationModel.address[i].state"
+            formControlName="state" name="state" id="state">
+          <div *ngIf="submitted && adressess().controls[i].get('state').errors?.required" class="error">
+            <div>State is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" [(ngModel)]="registrationModel.password" formControlName="password"
+        name="password" id="password">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your password with anyone else.</small>
+      <div *ngIf="submitted && f.password.errors" class="error">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlFile1">Profile Picture</label>
+      <input type="file" class="form-control-file" [(ngModel)]="registrationModel.profilePic"
+        formControlName="profilepic" name="profilepic" (change)="selectProfilePic($event)" id="exampleFormControlFile1">
+      <div *ngIf="submitted && f.profilepic.errors" class="error">
+        <div *ngIf="f.profilepic.errors?.required">Profile Picture is required</div>
+        <div *ngIf="f.profilepic.errors?.notSupportedFileType">File Type not supported. Only .png & .jpg allowed</div>
+      </div>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="registrationModel.tnc" formControlName="tnc"
+        name="tnc" id="tnc" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">I agree to the terms & conditions.</label>
+      <div *ngIf="submitted && f.tnc.errors" class="error">
+        <div *ngIf="f.tnc.errors.required">Please accept terms & conditions.</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

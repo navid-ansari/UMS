@@ -1,0 +1,26 @@
+<div class="container">
+  <accordion [isAnimated]="true">
+    <accordion-group *ngFor="let subtopic of tutorialResponse?.topicList" [heading]="subtopic.topictitle">
+      <div>
+        <!-- <pre>{{subtopic.subTopics | json}}</pre> -->
+        <!-- <h2>{{subtopic | json}}</h2> -->
+        <div *ngFor="let topic of subtopic.subTopics">
+          <!-- <pre>{{topic | json}}</pre> -->
+          <h2>{{topic.topictitle}}</h2>
+          <div *ngFor="let text of topic.topicText">
+            <p>{{text.text}}</p>
+            <pre *ngIf="text.code">{{text.code}}</pre>
+            <pre *ngIf="text.codeoutput">Output => {{text.codeoutput}}</pre>
+            <div>
+              <ul *ngFor="let bullets of text.bulletpoints">
+                <li>
+                  {{bullets.point}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </accordion-group>
+  </accordion>
+</div>

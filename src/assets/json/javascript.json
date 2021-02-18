@@ -1,0 +1,648 @@
+{
+
+  "tutorialHeading": "Javascript Interview Questions",
+  "topicList": [{
+      "topictitle": "Javascript Core Concepts",
+      "subTopics": [{
+          "topictitle": "Javascript Fundamentals",
+          "topicText": [{
+            "text": "Javascript is a synchronous, single threaded threaded language. That means it can execute one command at a time & in a specific order. It can go to next code statement only when the current statement finished execution."
+          }]
+        },
+        {
+          "topictitle": "Execution Phase & Program Flow",
+          "topicText": [{
+              "text": "Everything in Javascript happens inside the 'Execution Context'. Execution context has two components, Memory(Variable Environment) & Code(Thread Of Execution). Memory component contains all our programming structure(Variable, Functions, Object etc) while code component has the responsibility of execution of the code present in Memory Component."
+            },
+            {
+              "text": "Execution Context has two phase for every Javascript page. One is 'Creation Phase' & another is 'Execution Phase'."
+            },
+            {
+              "text": "Creation phase happens inside 'Memory' component. In this phase memory has been allocated to the variables and functions. Variables has assigned an undefined value while function declaration stored as it is."
+            },
+            {
+              "text": "Execution phase happens inside 'Thread Of Execution' component. In this phase varibale with undefined values has been assigned with the actual values. If execution environment encounters any function invocation, it creates a seperate execution environment for that function & again Memory & Execution components has been created for the respective function. Now the code of that function will go through the 'Creation' & 'Execution' phases as we seen before. Once the execution phase of the function has been completed, Exection context of that function has been completely deleted."
+            },
+            {
+              "text": "Once execution phase of the Javascript page completed, Execution Context of that page also gets deleted."
+            },
+            {
+              "text": "Management of Execution context is done by Javascript's 'Call Stack'. It this stack all execution context is pushed & popped upon creation & deletion respectively. By default call stack has 'Global Exection Context' when Javascript page loads & it becomes empty when global exection context completes it's exection."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Javascript Hoisting",
+      "subTopics": [{
+        "topictitle": "What is Hoisting & Why & How it happens?",
+        "topicText": [{
+            "text": "Accessing variables & Function even before they have been initialized is called hoisting."
+          },
+          {
+            "text": "Reason for this is, Javascript creates an Execution Context in which under the Memory allocation phase, All the varibales are assigned with the 'Undefined'. While function definition are stored as it is in case of functions."
+          },
+          {
+            "text": "So when we try to access the value of the variable before its declaration, we get that value as an undefined. And when we try to access the value of the function it becomes function definition."
+          },
+          {
+            "text": "We have once more scenario in case of function. If we declare a function as function expression.",
+            "code": "var f = function fn(){\n} \nor\nvar getName = () => {\n}"
+          },
+          {
+            "text": "and try to access it before it's declaration, Javascript will throw an error 'is not a function' because this function is stored as a varibale with undefined value in execution context due to its declaration type(function expression or fat arrow). And we are trying to run a function which is not present."
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Javascript Global Objects",
+      "subTopics": [{
+        "topictitle": "What are Javascript Global Objects(Window & this)?",
+        "topicText": [{
+            "text": "Any code which you write in Javascript which is not part of a function, is present in a global space. Global functions and variable gets attached to the global object by javascript engine."
+          },
+          {
+            "text": "Javascript engine creates a global object before running any Javascript file. It is a collection of Javascript variable & function which are initialized upon creation of global objects."
+          },
+          {
+            "text": "You can see the global object by typing window in chrome console as window. this object can be seen by typing this in console."
+          },
+          {
+            "text": "Global object & this is same for window object. (window == this) will return true.",
+            "code": "var x = 10;\n function global() {\n var x = 100;\n} \nconsole.log(x);\nconsole.log(window);\nconsole.log(this.x);"
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Javascript undefined Vs Not Defined",
+      "subTopics": [{
+        "topictitle": "What are Javascript undefined Vs Not Defined?",
+        "topicText": [{
+            "text": "Undefined is like a placeholder value for Javascript variables when program is initialized and undergoes memory phase."
+          },
+          {
+            "text": "While 'Not Defined' is a error we get when we try to access any variable of funtion which is not declared in Javascript code."
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Scopes & Lexical Environment",
+      "subTopics": [{
+          "topictitle": "Lexical Environment",
+          "topicText": [{
+              "text": "The hierarchy or the physical presence of the code inside the Javascript code is called as the lexical environment."
+            },
+            {
+              "text": "Lexical Environment is created along with the memory allocation phase of execution stack."
+            },
+            {
+              "text": "See below example. Fn b() is lexically present inside Fn a() & Fn a() is lexcally present inside global object. Fn b() also forms a closure with Fn a() because it is getting access of Fn a()'s lexical environment.",
+              "code": "function a() { \n function b() { \n } \n}"
+            },
+            {
+              "text": "In result lexical environment of Fn b() can get access to the lexical environment of Fn a(), Fn a() can get access of lexical environment of global object & Fn b() can also access lexical environment of lexical scope of global object."
+            },
+            {
+              "text": "And when we have this chain on Lexical Environment, we call it as a block chain."
+            },
+            {
+              "text": "Block chain simply means a series of lexical environment formed when multiple functions are in parent child relationship."
+            }
+          ]
+        },
+        {
+          "topictitle": "Scopes",
+          "topicText": [{
+              "text": "Scope simply means a area that is determined by the lexical environment of the program, where in a program you can access specific variable or a function in our code."
+            },
+            {
+              "text": "Javascript provides Global Scope, Local Scope & Block Scope."
+            },
+            {
+              "text": "Object(Fn & variables) which are present in global window object(global space) have global scope."
+            },
+            {
+              "text": "Object(Fn & variables) which are present inside the Functions have Local or Function Scope(local to that function only)."
+            },
+            {
+              "text": "Object(Fn & variables) which are present inside the block statements have Block Scope(within the curly braces only)."
+            },
+            {
+              "text": "Refer below code sample.",
+              "code": "//Global Scope \nfunction a() { //Local Scope \n if(true) { //Block Scope \n } \n}"
+            },
+            {
+              "text": "Javascript itself is a functionally scoped language, it means all the objects(Fn & var) declared must be inside a function. If object does not present in any of the scopes, then by default it is considered into global object Fn."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Temporal Dead Zone (TDZ)",
+      "subTopics": [{
+        "topictitle": "Temporal Dead Zone (TDZ)",
+        "topicText": [{
+            "text": "Let & const are special javascript keywords, and hoisting to them happens little differently. When Execution environment hoist them in memory allocation phase(asign undefined to them) it puts them in seperate memory(script memory) not in global scope & we cannot access let & const before assigning some value to them."
+          },
+          {
+            "text": "'Temporal Dead Zone(TDZ) is a time since when the let & const is hoisted till the value initialization."
+          },
+          {
+            "text": "If we try to print or use let & const between TDZ it gives initialization error.",
+            "code": "console.log(x); //this is allowed\nconsole.log(y);//this will throw an error // Cannot access 'y' before initialization\nvar x = 10;\nlet y = 20;"
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Var, Let & Const",
+      "subTopics": [{
+          "topictitle": "What is a Block?",
+          "topicText": [{
+            "text": "Block is a wrapper for multiple Javascript code statements so that they can put together & placed wherever Javascript expects single statements."
+          }]
+        },
+        {
+          "topictitle": "What is Block Scope?",
+          "topicText": [{
+            "text": "What all variables and functions can be accessed within the block is called block scope."
+          }]
+        },
+        {
+          "topictitle": "Var, Let & Const",
+          "topicText": [{
+              "text": "var, let & const are varible declaration keywords in Javascript."
+            },
+            {
+              "text": "Javascript has two types of scopes. Global Scope & Local scope."
+            },
+            {
+              "text": "Global scope is the scope of the window object or the scope of the complete Javascript file. While as local scope is the scope of the variable residing inside the function.",
+              "code": "var x = 'Navid Ansari';//global scope\nfunction a(){\n}\nfunction b(){\n}"
+            },
+            {
+              "text": "Javascript has a function scope. Variables declared within a JavaScript function, become LOCAL to the function & are not accessible (visible) from outside the function.",
+              "code": "function a() {\n var x = 'Anwar Ansari';// function scope\n console.log(x);\n}"
+            },
+            {
+              "text": "By introduction of let & const we can have block scopes as well.",
+              "code": "function b() {\nvar a = true;\nif (a) {\nconst name = 'I have a Name'; // block scope\nconsole.log(name);\n }\n}"
+            }
+          ]
+        },
+        {
+          "topictitle": "Var",
+          "topicText": [{
+              "text": "Javascript variables are function scoped."
+            },
+            {
+              "text": "Variables can become global scoped or local scoped depending upon their physical declaration in the program."
+            },
+            {
+              "text": "If variable is used without the declaration, Javascript will create a global scoped variable with that name, but it is not a good practice to follow.",
+              "code": "function c() {\n d = 'Saman Aara'; //using variable without declaration\n console.log(d);\n}\nfunction p() {\n console.log(d);\n}\nc();\np();"
+            }
+          ]
+        },
+        {
+          "topictitle": "Let",
+          "topicText": [{
+              "text": "let is block scoping declaration syntax."
+            },
+            {
+              "text": "It works same as variable(var) in all aspects except in hoisting & scopes."
+            },
+            {
+              "text": "let are also hoisted but in a different manner. They goes to temporal dead zone"
+            },
+            {
+              "text": "let has a block scope as compared to var. But it can also become a global scoped if they are declared in global space.",
+              "code": "// example of var\nfunction q() {\n var array1 = ['I', 'Have', 'My', 'Youtube', 'Channel'];\n for (var i = 0; i < array1.length; i++) {\n console.log(array1[i]);\n}\nconsole.log(i); // this is possible in function scoping\n// example of let\n var array2 = ['I', 'Have', 'My', 'Youtube', 'Channel'];\n for (let j = 0; j < array2.length; j++) {\n console.log(array2[j]);\n }\n}\nq();\n"
+            }
+          ]
+        },
+        {
+          "topictitle": "Const",
+          "topicText": [{
+              "text": "const is block scoping declaration syntax."
+            },
+            {
+              "text": "It works same as Let(let) in all aspects except in value assignment."
+            },
+            {
+              "text": "Hoisting is same as let. It also goes to temporal deade zone."
+            },
+            {
+              "text": "const has a block scope same as let. But it expected immediate value assignment & it's value cannot be modified(for string, number, boolean). Const value can be modified in case of array & objects.",
+              "code": "// const\nconst pi = 3.14;\n// pi = 4.14 // not allowed\n/*const area; //not allowed\narea = 1200;*/\nconst obj = { name: 'Navid', age: 30 };\nobj.name = 'Mohan'; // it is allowed\n// obj = { name: '', age: 25 }; //it is not allowed\n"
+            }
+          ]
+        },
+        {
+          "topictitle": "Shadowing",
+          "topicText": [{
+              "text": "Shadowing occurs in var."
+            },
+            {
+              "text": "When we declare same named variable in in both parent and child block ,then the variable value will be shadowed(overriden) by the child blocks's varible value in both child & parent scopes."
+            },
+            {
+              "text": "We can overcome shadowing by using let & const keyword."
+            },
+            {
+              "text": "Shadowing happens only in block, it will not happen in functions as functions creates their own execution contexts",
+              "code": "// shadowing\nvar s = 'Shadow'\nfunction shadow() {\n var s = 'Shadowing';\n console.log(s);\n}\nshadow();\nconsole.log(s);"
+            }
+          ]
+        },
+        {
+          "topictitle": "Illegal Shadowing",
+          "topicText": [{
+              "text": "Trying to shadow already declared let variable by var variable with same name is called as illegal shadowing & it is not allowed. Javascript will throw an error as variable is already defined.",
+              "code": "// illegal shadowing\n/*let p = 15\n// this is not allowed\n{\n var p = 20;\n}*/"
+            },
+            {
+              "text": "The valid legal shadowing is",
+              "code": "// illegal shadowing\n/*var p = 15\n// this is not allowed\n{\n let p = 20;\n}*/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Different Ways Of Calling(Invoking) Functions",
+      "subTopics": [{
+        "topictitle": "Method 1",
+        "topicText": [{
+            "text": "Method 1 - Normal Invocation",
+            "code": "var x = 1; // global scope\nfunction a() {//local scope of fn a\n var x = 10;\n console.log(x);\n}\nfunction b() {//local scope of fn b\n var x = 100;\n console.log(x);\n}\na();\nb();",
+            "codeoutput": "1, 10, 100"
+          },
+          {
+            "text": "Method 2",
+            "code": "function outer() {\nvar a = 200;\nvar b = 300;\nfunction inner() {\n console.log(a);\n function inner2() {\n console.log(b);\n}\nreturn inner2;}\nreturn inner;}\nouter()()(); // if we have a nested Fn we can call them this way as well. But inner Fn must be of type returned",
+            "codeoutput": "200, 300"
+          },
+          {
+            "text": "Method 3 - With Function expression",
+            "code": "function outer2() {\n var a = 400;\n function inner1() {\n  console.log(a);\n }\n return inner1;\n}\nvar z = outer2();\nz();\n",
+            "codeoutput": "400"
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Closures",
+      "subTopics": [{
+          "topictitle": "What is Closure?",
+          "topicText": [{
+              "text": "Combination of a function bundled together with it's lexical environment."
+            },
+            {
+              "text": "In simple terms closures give access to the outer function's scope from inner function."
+            },
+            {
+              "text": "In Javascript, closures are created everytime the function is created",
+              "code": "// basic example\nfunction q() {\n var x = 10;\n function r() {\n console.log(x);\n} r();\n} q();",
+              "codeoutput": "10"
+            },
+            {
+              "text": "Even if the function returned from any function, they remember their lexical scope, that mean they remember where they were present in actual program."
+            },
+            {
+              "text": "When function was returned, it is was returned with closure & it's lexical scope, that is why it maintains it's lexical scope.",
+              "code": "// closure with return\nfunction a() {\n var y = 20;function b() {\nconsole.log(y);} return b;}\nvar c = a();\nconsole.log(c);\nc();",
+              "codeoutput": "20"
+            }
+          ]
+        },
+        {
+          "topictitle": "What are the uses Of Closures?",
+          "topicText": [{
+              "text": "Module design pattern, currying, memoize, state maintenance in async javasript, setTimeout."
+            },
+            {
+              "text": "Module design pattern, currying, memoize, state maintenance in async javasript, setTimeout."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Closures Trick Questions",
+      "subTopics": [{
+          "topictitle": "Question 1. What is output of the code",
+          "topicText": [{
+            "text": "",
+            "code": "function a() {\n var i = 10;\n setTimeout(function() {\n console.log(i);\n }, 1000);\n}\na();",
+            "codeoutput": "10 after 1 sec"
+          }]
+        },
+        {
+          "topictitle": "Question 2. What is output of the code?",
+          "topicText": [{
+              "text": "",
+              "code": "function b() {\n for (var i = 0; i < 5; i++) {\n  setTimeout(function() {\n  console.log(i);\n  }, 1000);\n }\n}\nb();",
+              "codeoutput": "Expected result: Printing 0 to 5 after 1 sec in log. Actual result: Printing 5 times 5 after 1 sec in log."
+            },
+            {
+              "text": "Why ?? Because SetTimeout callback function forms a closure along with the lexical environment of for loop & Fn b(). Then setTimeout()(5 copies of setTimeout()) is put to the call stack to run after timeout expires, but when it taken out it points to the reference(physical address in memory) of the i(not the value) due to closure(5 different setTimeout() pointing to same i in physical memory address). so when the timeout of setTimeout() expires the value of i becomes 5. And when setTimeout() access it in reference, it finds 5 for every iteration."
+            },
+            {
+              "text": "Solution 1 -> Using let"
+            },
+            {
+              "text": "let is block scoped. So when loop runs, it creates a new block scope for every iteration, hence value of i becomes new for every iteration(5 different setTimeout() pointing to 5 different i's in physical memory address).",
+              "code": "function b() {\n for (let i = 0; i < 5; i++) {\n  setTimeout(function() {\n  console.log(i);\n  }, 1000);\n }\n}\nb();",
+              "codeoutput": "0 to 5 after each 1 sec in log."
+            },
+            {
+              "text": "Solution 2 -> Using closure"
+            },
+            {
+              "text": "We can form a closure inside loop and provide a new copy of i for every iteration as a parameter to that function.",
+              "code": "function d() {\n for (var i = 0; i < 5; i++) {\n  function closure(i) {\n   setTimeout(function() {\n   console.log(i);\n   }, 1000);\n  }\n closure(i);\n }\n}\nb();",
+              "codeoutput": "0 to 5 after each 1 sec in log."
+            }
+          ]
+        },
+        {
+          "topictitle": "Question 3. What is output of the code?",
+          "topicText": [{
+            "text": "",
+            "code": "function j() {\n var e = 30;function k() {\n console.log(e); // this points to reference of a, which becomes 40 before returning\n }\n e = 40;\n return k;\n}\nvar l = j();\nl();",
+            "codeoutput": "Output => 40"
+          }]
+        },
+        {
+          "topictitle": "Question 4. What is output of the code?",
+          "topicText": [{
+            "text": "",
+            "code": "function m() { //Fn o is a closure of Fn n & Fn m\n var a = 200;function n() {\n  var b = 300;function o() {\n  log(a, b);\n  }\n o();\n }\n n();\n}\nm();",
+            "codeoutput": "Output => 200, 300"
+          }]
+        },
+        {
+          "topictitle": "Uses of Closure",
+          "topicText": [{
+              "text": "Data Encapsulation(Data Hiding), Function Currying, memoiz, Module Pattern."
+            },
+            {
+              "text": "Below is the example of Data Encapsulation(Data Hiding)."
+            },
+            {
+              "text": "Suppose we have variable which holds a converted indian currency into USD, we can keep that varibale inside a closure instead of making it as a global value so that it can't be accessed from outside.",
+              "code": "function moneyCounter() {\n var money = 2000;\n return function addMoney() {\n money = money * 75;\n console.log('Money is ' + money);\n  };\n }\n}\nvar convertor = moneyCounter();\nconvertor();",
+              "codeoutput": "USD amount * 75"
+            },
+            {
+              "text": "If we again run convertor();, it will take the prevoius value of money which has been calculated on first run and again do a calculation.",
+              "code": "var convertor1 = moneyCounter(); // this will create a new instance of convertor function & will start calculation from start convertor1();",
+              "codeoutput": "Prevoius USD amount * 75 => This leads to calculation mistake"
+            },
+            {
+              "text": "If we want to create a fresh instance & start a calculation from scratch, then we can create new instance of the moneyCounter(); function in function expression and invoke it like below",
+              "code": "var convertor1 = moneyCounter(); // this will create a new instance of convertor function & will start calculation from start convertor1();",
+              "codeoutput": "USD amount * 75"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Javascript Garbage Collector",
+      "subTopics": [{
+          "topictitle": "What is Garbage Collectotion?",
+          "topicText": [{
+            "text": "Freeing up the free memory after the program terminates and ends, and references to those memory locations either not needed anymore or not reachanble is called as the process of Garbage Collection."
+          }]
+        },
+        {
+          "topictitle": "What is Garbage Collector?",
+          "topicText": [{
+              "text": "Javascript is a high level programming language. Like most programming languages, Javascript automatically does it's memory management(allocation & release) through automatic routines while in low level languages like 'C' it is manually done by routines."
+            },
+            {
+              "text": "This automatic management of allocation, release & freeing up the memory is called Garbage Collection, & the program(routine) responsible for that is called Garbage Collector."
+            }
+          ]
+        },
+        {
+          "topictitle": "Mark & Sweep Algorithm",
+          "topicText": [{
+              "text": "All modern web browsers make use of 'Mark & Sweep' algorithm for garbage collection."
+            },
+            {
+              "text": "This algorithm starts looking from the root of the object & checks for all the linked references. In case if the algrithm finds an unreachable location & references, then those references should be removed."
+            },
+            {
+              "text": "First phase(Mark) of the algorithm will mark all the reachable references. In second phase(Sweep), all the unmarked locations will be sept away.",
+              "code": "var obj = 'Name';\nobj = null; //this points to no location, will be garbage collected"
+            }
+          ]
+        },
+        {
+          "topictitle": "Relation between Garbage Collector & Closure",
+          "topicText": [{
+              "text": "Garbage collector keeps tracks of free memory references so that it can be garbage collected to free up the memory."
+            },
+            {
+              "text": "In case of closure, lexical scopes of the participating functions will be if memory when they are in use. It may result in overconsumption of the memory to keep track of lexical scopes and participating functions and the vairbales in it."
+            },
+            {
+              "text": "So these active variables may not be garbage collected due to their references are still in use."
+            },
+            {
+              "text": "In the below example, closure b() making use of only variable 'p', so the variable 'q' will be garbage collected.",
+              "code": "function a() {\n  var p = 10;\n  var q = 20; \n function b() {\n  console.log(p);\n }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Javascript Anonymous Functions",
+      "subTopics": [{
+          "topictitle": "What is Anonymous Function in Javascript?",
+          "topicText": [{
+            "text": "Function without a name is called as anonymous function."
+          }]
+        },
+        {
+          "topictitle": "But whay we need an anonymous functions?",
+          "topicText": [{
+            "text": "Anonymous Fns are used when we have to use function as a value. e.g Fn Expression.",
+            "code": "var b = function() {/n console.log('Fn Expression with Anonymous Fn');\n};"
+          }]
+        },
+        {
+          "topictitle": "What are first class functions?",
+          "topicText": [{
+            "text": "The functions which makes use of another functions as a value &/or returning those functions which has been passed as a argument is called as first class functions. e.g Callback Functions.",
+            "code": "var e = function f(param) {\n return param();\n};\nfunction param() {\nconsole.log('I Am First Class Functions');\n}\ne(param);"
+          }]
+        },
+        {
+          "topictitle": "What are 'function statement', 'function declaration', function expression, Named function expression?",
+          "topicText": [{
+              "text": "All these terminologies are used to define the different types of writing the new functions."
+            },
+            {
+              "text": "'function Statement' & 'Function Declaration' are same and used to declare a new function with 'function' keyword. Below is the example of Function Declaration.",
+              "code": "function a() {}"
+            },
+            {
+              "text": "'Function Expression' is nothing but the storing the function declaration in variable. Below is the example of 'Function Expression'.",
+              "code": "var a = function {}"
+            },
+            {
+              "text": "'Named Function Expression' is function expression with name given to the function. Below is the example of 'Function Expression'.",
+              "code": "var a = function b() {}"
+            },
+            {
+              "text": "NFE are better as compared to FE for below reasons.",
+              "bulletpoints": [{
+                  "point": "Anonymous functions doesn't help when debugging as you can't see the name of the function that causes problems."
+                },
+                {
+                  "point": "When you do not name a function, later on its harder to understand what it's doing. Giving it a name makes it easier to understand."
+                },
+                {
+                  "point": "You can use the name of that function when you need recursion."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Javascript Event Listeners",
+      "subTopics": [{
+        "topictitle": "What is 'Event Listener' in Javascript?",
+        "topicText": [{
+            "text": "An event listener is a procedure in JavaScript that waits for an event to occur."
+          },
+          {
+            "text": "Event listeners are among the most frequently used JavaScript structures in web design. They allow us to add interactive functionality to HTML elements by “listening” to different events that take place on the page, such as when the user clicks a button, presses a key, or when an element loads."
+          },
+          {
+            "text": "Below is an example of a click event listener which counts the total number of times the button is pressed.",
+            "code": "var count = 0;\ndocument.getElementById('btn').addEventListener('click', function() {\n count++;\n console.log('Btn Clicked' + ' '' + count + ' ' + 'times');\n document.getElementById('click-count').innerHTML = count.toString();\n});"
+          },
+          {
+            "text": "Multiple event listeners can be attached to the single elements. See in below example we are attaching one more event listener to the previous example. This time 'mouseover' event listener.",
+            "code": "var count = 0;\n document.getElementById('btn').addEventListener('mouseover', function() {\n count++;\n console.log('Btn Clicked' + ' '' + count + ' ' + 'times');\n document.getElementById('click-count').innerHTML = count.toString();\n});"
+          },
+          {
+            "text": "Event Listeners are heavey processes, because they have to be in memory to continously check for the event to occur. Better they should be wrapped around in a function.",
+            "code": "function addEventListener() {\n  var count = 0;\n   document.getElementById('btn').addEventListener('click', function() {\n   count++;\n   console.log('Btn Clicked' + ' '' + count + ' ' + 'times');\n   document.getElementById('click-count').innerHTML = count.toString();\n  });\n}\naddEventListener();"
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Promises in Javascript",
+      "subTopics": [{
+          "topictitle": "What are promises?",
+          "topicText": [{
+              "text": "Promiseis nothing but the programming technique used to handle asynchronous operations in JavaScript. They are easy to manage when dealing with multiple asynchronous operations where callbacks can create callback hell leading to unmanageable code."
+            },
+            {
+              "text": "A promise can have three states. 'Pending', 'Resolved' & 'Rejected'."
+            },
+            {
+              "text": "The .then() function returns the 'Resolved' state while .catch() returns an 'Rejected' or error states. Muliple .then() method can be chained together as per the need(if data needs a further modification or something like that) it is called promise chaining."
+            },
+            {
+              "text": "If we chain multiple .then(), then in this case all the .then() methods should return except the last one."
+            },
+            {
+              "text": "Below is the simple example of promise with success callback & error handling. It has multiple .then() methods chained together. The first one return a response & second one modifies the response.",
+              "code": "var promise = new Promise((resolve, reject) => {\n  let name = true;\n  if (name) {\n   resolve('I am resolved');\n  } else {\n   //reject('I am rejected'); \n   reject(new Error('I am rejected')); //it will not work in browser\n  }\n});\npromise.then(message => {\n  console.log(message);\n  return message + 'and modified';\n})\n.then(modifiedmessage => {\n  console.log(modifiedmessage);\n })\n.catch(error => {\n  console.log(error);\n});"
+            },
+            {
+              "text": "Promises are eager, meaning that a promise will start doing whatever task you give it as soon as the promise constructor is invoked. If you need lazy, check out observables."
+            },
+            {
+              "text": "Promise Improves Code Readability, Better handling of asynchronous operations, Better flow of control definition in asynchronous logic & Better Error Handling"
+            }
+          ]
+        }, {
+          "topictitle": "What are different promises methods and types?",
+          "topicText": [{
+            "text": "Prmises have .resolve(), .reject(), .all(), allSettled(), .race(), .cancel(), .finally() methods. Let's see them one by one."
+          }]
+        },
+        {
+          "topictitle": ".resolved() and .reject() Methods",
+          "topicText": [{
+            "text": ".resolved() and .reject() handles resolved and rejected states as we seen in previous example."
+          }]
+        },
+        {
+          "topictitle": ".all() Method",
+          "topicText": [{
+              "text": ".all() is used to run multiple promises together. It takes an array of promises and returns a array of response of all promises together.",
+              "code": "Promise.all([promise1, promise2, promise3]).then(messages => {\n console.log\n('Promise All ' + messages);\n});"
+            },
+            {
+              "text": ".all() is used to run multiple promises together. It takes an array of promises and returns a array of response of all promises together."
+            },
+            {
+              "text": ".all() runs on all or none theory.If any of the provided promises go to 'Reject' or 'Error' state, the result will not be returned for anyone.",
+              "code": "Promise.all([promise1, promise2, promise3]).then(messages => {\n console.log('Promise All ' + messages);\n console.log(messages);\n});"
+            }
+          ]
+        },
+        {
+          "topictitle": ".allSettled() Method",
+          "topicText": [{
+              "text": ".all() is same as .all() method with one extra feature. It returns the array of all the promises independant of their success & failure"
+            },
+            {
+              "text": "If any of the promise failed, the rejected & Error response will also be returned which was not happening in the .all() method. It always returns the response irrespective of failure & success",
+              "code": "Promise.allSettled([promise1, promise2, promise3]).then(messages => {\n console.log('Promise All Settled ' + messages);\n});"
+            }
+          ]
+        },
+        {
+          "topictitle": ".race() Method",
+          "topicText": [{
+              "text": ".race() is used to also used to run multiple promises together. It takes an array of promises and returns a array of response of all promises together.",
+              "code": "Promise.all([promise1, promise2, promise3]).then(messages => {\n console.log('Promise All ' + messages);\n console.log(messages);\n});"
+            },
+            {
+              "text": "But unlike .all(), it returns the result as the single promise which resolved first(race condition) out of the provided group of promises.",
+              "code": "Promise.race([promise1, promise2, promise3]).then(messages => {\n console.log('Promise Race ' + messages);\n console.log(messages);\n});"
+            }
+          ]
+        },
+        {
+          "topictitle": ".finally() Method",
+          "topicText": [{
+            "text": "The finally() method can be useful if you want to do some data processing, cleanup or invoke some function once the promise is settled, regardless of its outcome."
+          }]
+        },
+        {
+          "topictitle": "What are the Advantages of Promises?",
+          "topicText": [{
+              "text": "Promises provide much cleaner code as compared to callback. By making use of promises, we can easily convert 'Callback Hell' to manageable code."
+            },
+            {
+              "text": "Promises provide better way of handling failure event by .resolved() & .catch() methods."
+            },
+            {
+              "text": "Multiple API calls can be easily managed with .all() & .allSettled() methods."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
