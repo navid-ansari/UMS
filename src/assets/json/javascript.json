@@ -547,6 +547,251 @@
       }]
     },
     {
+      "topictitle": "Javascript Event Bubbling & Capturing",
+      "subTopics": [{
+          "topictitle": "What is 'Event Bubbling & Capturing' in Javascript?",
+          "topicText": [{
+              "text": "Event bubbling and Capturing are the methods of events propagation in DOM tree."
+            },
+            {
+              "text": "They define how the event will be propagated into the DOM three in upward & downward direction."
+            }
+          ]
+        },
+        {
+          "topictitle": "Event Bubbling",
+          "topicText": [{
+              "text": "Let's see 'Event Bubbling' in detail. Refer to the below example. It has 3 div's nested one another. Consider outermost div as a 'grandparent', middle one as 'parent' & inenrmost as 'child'."
+            },
+            {
+              "text": "All three div has a click event listener attached to them. Each div will print div name once we click on it."
+            },
+            {
+              "text": "When we click on child div, the click event bubbles up to the immediate parent and invokes parents click handle. Then it further bubbles up to grandparent div and run its grandparents click handler & so on. It will bubbles up till the root of the DOM."
+            },
+            {
+              "text": "The event propagation in upward direction(bubbling up) of the DOM is called event bubbling. Below the the html.",
+              "code": "<div class='grandparent' id='grandparent'>\n Grandparent\n  <div class='parent' id='parent'>\n   Parent\n   <div class='child' id='child'>\n    Child\n    </div>\n   </div>\n</div>"
+            },
+            {
+              "text": "And below the the Javascript code with event listener.",
+              "code": "document.getElementById('grandparent').addEventListener('click', e => {\n console.log('Grandparent Clicked');\n});\ndocument.getElementById('parent').addEventListener('click', e => {\n console.log('Parent Clicked');\n});\ndocument.getElementById('child').addEventListener('click', e => {\n console.log('Child Clicked');\n});\n",
+              "codeoutput": "Child Clicked => Parent Clicked => Grandparent Clicked"
+            }
+          ]
+        },
+        {
+          "topictitle": "Event Capturing",
+          "topicText": [{
+              "text": "Now Let's see 'Event Capturing' or 'Event Trickeling' in detail. Consider the same example we previously considered in Bubbling. Just change the id of the element so we attach new click handler to it."
+            },
+            {
+              "text": "Now if we pass a third parameter to the addEventListener method as 'true' or 'useCapture: true', the event propagation will happen in opposite direction(from top to bottom) unlike Event Bubbling(console values will be printed upside down)."
+            },
+            {
+              "text": "The propagation of event in downward direction in DOM is called 'Event Capturing'. Below is the html",
+              "code": "<div class='grandparent1' id='grandparent1'>\n Grandparent1\n  <div class='parent1' id='parent1'>\n   Parent1\n   <div class='child1' id='child1'>\n    Child1\n    </div>\n   </div>\n</div>"
+            },
+            {
+              "text": "And below the the Javascript code with event listener.",
+              "code": "document.getElementById('grandparent1').addEventListener('click', e => {\n console.log('Grandparent1 Clicked');\n},true);\ndocument.getElementById('parent1').addEventListener('click', e => {\n console.log('Parent1 Clicked');\n}, true);\ndocument.getElementById('child1').addEventListener('click', e => {\n console.log('Child1 Clicked');\n},true);\n",
+              "codeoutput": "Grandparent1 Clicked => Parent1 Clicked => Child1 Clicked"
+            }
+          ]
+        },
+        {
+          "topictitle": "Few more things about Bubbling & Capturing.",
+          "topicText": [{
+              "text": "Event Bubbling & Capturing are not issue, but the feature itself provided by Javascript."
+            },
+            {
+              "text": "Earliar only Capturing feature was introduced by Netscape(Inventors on Javasctipt), but microsoft wanted to be it as other way(Bubbling).So in the end W3C made both event bubbling & Capturing as a standard."
+            },
+            {
+              "text": "Event bubbling will happend by default if you don't specify the true boolean flag(third parameter) in Event Listener."
+            }
+          ]
+        },
+        {
+          "topictitle": "How to stop Event Propagation.",
+          "topicText": [{
+              "text": "Event propagation can be stopped using special method provided in Javascript called .stopPropagation()."
+            },
+            {
+              "text": "When Javascript encounters this method, it immediatly stops the event propagation of Captureing & bubbling Phase."
+            },
+            {
+              "text": "Event bubbling will happend by default if you don't specify the true boolean flag(third parameter) in Event Listener."
+            },
+            {
+              "text": "Below is the modified code with the .stopPropagation().",
+              "code": "<div class='grandparent2' id='grandparent2'>\n Grandparent2\n  <div class='parent2' id='parent2'>\n   Parent2\n   <div class='child2' id='child2'>\n    Child2\n    </div>\n   </div>\n</div>"
+            },
+            {
+              "text": "& the respective Javascript is",
+              "code": "document.getElementById('grandparent2').addEventListener('click', e => {\n console.log('Grandparent2 Clicked');\n},true);\ndocument.getElementById('parent2').addEventListener('click', e => {\n console.log('Parent2 Clicked');\n}, true);\ndocument.getElementById('child2').addEventListener('click', e => {\n console.log('Child2 Clicked');\n},true);\n",
+              "codeoutput": "Child2 Clicked"
+            }
+          ]
+        },
+        {
+          "topictitle": "Nested div with capturing & bubbling.",
+          "topicText": [{
+              "text": "What if we have Nested Div's with few events as Bubbling & few as Capturing? What will be the sequence of execution of below code?"
+            },
+            {
+              "text": "By default, Bubbling cycle occurs if capturing flag is false. Suppose in any nested div's, first div is Capturing & remaining are Bubbling. Then first all the capturing cycle will be happen & all the event listeners with capturing true will execute. Next for rest of the event Listers in nested di, bubbling will happen."
+            },
+            {
+              "text": "Conside the below example.",
+              "code": "<div class='grandparent3' id='grandparent3'>\n Grandparent3\n  <div class='parent1' id='parent3'>\n   Parent3\n   <div class='child3' id='child3'>\n    Child3\n    </div>\n   </div>\n</div>"
+            },
+            {
+              "text": "& the respective Javascript is",
+              "code": "document.getElementById('grandparent3').addEventListener('click', e => {\n console.log('Grandparent3 Clicked');\n},true);\ndocument.getElementById('parent3').addEventListener('click', e => {\n console.log('Parent3 Clicked');\n}, false);\ndocument.getElementById('child3').addEventListener('click', e => {\n console.log('Child3 Clicked');\n},false);\n",
+              "codeoutput": "Grandparent3 Clicked => Child3 Clicked => Parent3 Clicked"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "topictitle": "Javascript Event Delegation",
+      "subTopics": [{
+        "topictitle": "What is Event Delegation in Javascript?",
+        "topicText": [{
+            "text": "An event delegation is a technique of bubbling up the events from multiple DOM elements and handling them at a single wrapper element."
+          },
+          {
+            "text": "The advantage of Event Delegation is instead of attaching a seperate event handler to each element , we can a single event handler in a wrapper div."
+          },
+          {
+            "text": "This technique reduces the number of event handlers in a page and thus reduces the performance bottleneck to a great extent."
+          },
+          {
+            "text": "Let's understand this by below example. Suppose we have a wrapper div(parent) and we have three different div inside this parent div each having its ows click event listeners attached to them.",
+            "code": "<div style='height: 100px; width: 100%; background-color:pink; color: white;'id='category'>\n <div style='height: 50px; width: 100px; background-color:red; color: white; text-align: center; float: left' id='laptop'>\n Laptop\n </div> \n  <div style='height: 50px; width: 100px; background-color:green; color: white; text-align: center; float: left' id='desktop'>\n Desktop\n </div> \n <div style='height: 50px; width: 100px; background-color:blue; color: white; text-align: center; float: left' id='camera'>\n Camera\n </div>\n</div>"
+          },
+          {
+            "text": "& the respective JS code is",
+            "code": "document.getElementById('category').addEventListener('click', e => {\n const item = e.target.id;\n if (item == 'laptop') {\n  console.log('Laptop List');\n } else if (item == 'desktop') {\n  console.log('Desktop List');\n} else if (item == 'camera') {\n  console.log('Camera List');\n }\n});",
+            "codeoutput": "id of the clicked list"
+          },
+          {
+            "text": "So instead of having three different event listeners, we can allow the click event to bubble up till the parent & we will attach a event listener to the parent div."
+          }
+        ]
+      }]
+    },
+    {
+      "topictitle": "Javascript Async Await",
+      "subTopics": [{
+        "topictitle": "What is async/await in Javascript?",
+        "topicText": [{
+            "text": "It is one the the techniques of asynchronous programming in Javascript. It is more like a sugarcoating on consuming Promises."
+          },
+          {
+            "text": "It's syntax is designed to work more efficiently and comfortable to use with Promises."
+          },
+          {
+            "text": "It does not actually help in producing the promises but it helps in consuming promises more efficiently with its syntax."
+          },
+          {
+            "text": "Async keyword before the method declares the function as asynchronous function."
+          },
+          {
+            "text": " While Await keyword makes javascript wait for the promise to complete and returns."
+          },
+          {
+            "text": "let's understand this with a simple example",
+            "code": "function googleApi() {\n return new Promise((res, rej) => {\n  setTimeout(() => {\n   res('Google Api Result');}, 2000);\n  });\n}"
+          },
+          {
+            "text": "",
+            "code": "function facebookApi() {\n return new Promise((res, rej) => {\n  setTimeout(() => {\n   res('Facebook Api Result');}, 3000);\n  });\n}"
+          },
+          {
+            "text": "",
+            "code": "async function asyncAwait() {\n const googleApiRes = await googleApi();\n console.log(googleApiRes);\n const facebookApiRes = await facebookApi();\n console.log(facebookApiRes);\n return googleApiRes + ' & ' + facebookApiRes;\n}"
+          },
+          {
+            "text": "",
+            "code": "asyncAwait().then(asyncRes => {\n console.log(asyncRes);\n});"
+          },
+          {
+            "text": "In above example, we have to functions googleApi() & facebookApi(). Both will return their promise result after 2000 ms & 3000ms respectively."
+          },
+          {
+            "text": "Once we consume the promise and execution context encounters the await keyword, it does not prints the it's value in console(will not run console.log()) unless & untill thier respective result values arrives."
+          },
+          {
+            "text": "That means Javascript will wait to execute console.log(googleApiRes); & console.log(facebookApiRes); till the result for await googleApi(); & await facebookApi(); arrives respectively."
+          }
+        ]
+      }]
+    },{
+      "topictitle": "Javascript fetch() api",
+      "subTopics": [{
+        "topictitle": "What is fetch() api in Javascript?",
+        "topicText": [{
+            "text": "It is one the the techniques of asynchronous programming in Javascript. It is more like a sugarcoating on consuming Promises."
+          },
+          {
+            "text": "It's syntax is designed to work more efficiently and comfortable to use with Promises."
+          },
+          {
+            "text": "It does not actually help in producing the promises but it helps in consuming promises more efficiently with its syntax."
+          },
+          {
+            "text": "Async keyword before the method declares the function as asynchronous function."
+          },
+          {
+            "text": " While Await keyword makes javascript wait for the promise to complete and returns."
+          },
+          {
+            "text": "let's understand this with a simple example",
+            "code": "function googleApi() {\n return new Promise((res, rej) => {\n  setTimeout(() => {\n   res('Google Api Result');}, 2000);\n  });\n}"
+          },
+          {
+            "text": "",
+            "code": "function facebookApi() {\n return new Promise((res, rej) => {\n  setTimeout(() => {\n   res('Facebook Api Result');}, 3000);\n  });\n}"
+          },
+          {
+            "text": "",
+            "code": "async function asyncAwait() {\n const googleApiRes = await googleApi();\n console.log(googleApiRes);\n const facebookApiRes = await facebookApi();\n console.log(facebookApiRes);\n return googleApiRes + ' & ' + facebookApiRes;\n}"
+          },
+          {
+            "text": "",
+            "code": "asyncAwait().then(asyncRes => {\n console.log(asyncRes);\n});"
+          },
+          {
+            "text": "In above example, we have to functions googleApi() & facebookApi(). Both will return their promise result after 2000 ms & 3000ms respectively."
+          },
+          {
+            "text": "Once we consume the promise and execution context encounters the await keyword, it does not prints the it's value in console(will not run console.log()) unless & untill thier respective result values arrives."
+          },
+          {
+            "text": "That means Javascript will wait to execute console.log(googleApiRes); & console.log(facebookApiRes); till the result for await googleApi(); & await facebookApi(); arrives respectively."
+          }
+        ]
+      },
+      {
+        "topictitle": "Few important points to remember in fetch api.",
+        "topicText": [{
+            "text": "fetch api never returns a failure response on HTTP error even if the response is an HTTP 404 or 500. Instead, it will resolve normally (with ok status set to false), and it will only reject on network failure or if anything prevented the request from completing."
+          },
+          {
+            "text": "we can identify the http failure condition with ok status true or false(res.ok true or false)."
+          },
+          {
+            "text": "fetch is helpfull in those api calls where we do not want to worry about the response. It it comes, we will show it otherwise we don't."
+          },
+          {
+            "text": "One more use case is, if we want to write our promises in more simplified manner then also we can make use of fetch() api."
+          }
+        ]
+      }]
+    }, {
       "topictitle": "Promises in Javascript",
       "subTopics": [{
           "topictitle": "What are promises?",
@@ -557,7 +802,7 @@
               "text": "A promise can have three states. 'Pending', 'Resolved' & 'Rejected'."
             },
             {
-              "text": "The .then() function returns the 'Resolved' state while .catch() returns an 'Rejected' or error states. Muliple .then() method can be chained together as per the need(if data needs a further modification or something like that) it is called promise chaining."
+              "text": "The .then() function returns the 'Resolved' state while .catch() returns an 'Rejected' or error states. Muliple .then() method can be chained together as per the need(if data needs a further modification or something like that) it is called promise chaining. "
             },
             {
               "text": "If we chain multiple .then(), then in this case all the .then() methods should return except the last one."
